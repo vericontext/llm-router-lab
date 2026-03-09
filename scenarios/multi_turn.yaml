@@ -1,0 +1,30 @@
+name: multi_turn
+description: Multi-turn conversation tests
+
+defaults:
+  model: gpt-4o
+  temperature: 0.7
+  max_tokens: 256
+
+cases:
+  - name: context_retention
+    messages:
+      - role: system
+        content: "You are a helpful assistant."
+      - role: user
+        content: "My name is Alice and I'm a software engineer."
+      - role: assistant
+        content: "Nice to meet you, Alice! How can I help you today?"
+      - role: user
+        content: "What's my name and what do I do?"
+
+  - name: instruction_following
+    messages:
+      - role: system
+        content: "You are a translator. Always respond in Korean."
+      - role: user
+        content: "Hello, how are you?"
+      - role: assistant
+        content: "안녕하세요, 잘 지내고 있습니다! 어떻게 도와드릴까요?"
+      - role: user
+        content: "What is the meaning of life?"

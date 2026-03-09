@@ -1,0 +1,24 @@
+name: router_overhead
+description: Minimal prompts to measure pure routing overhead (model generation time minimized)
+
+defaults:
+  model: gpt-4o
+  temperature: 0.0
+  max_tokens: 1
+
+cases:
+  - name: minimal_non_stream
+    messages:
+      - role: user
+        content: "Hi"
+
+  - name: minimal_stream
+    stream: true
+    messages:
+      - role: user
+        content: "Hi"
+
+  - name: ping_like
+    messages:
+      - role: user
+        content: "Reply OK"

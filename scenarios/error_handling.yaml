@@ -1,0 +1,26 @@
+name: error_handling
+description: Error handling and edge cases
+
+defaults:
+  temperature: 0.7
+  max_tokens: 256
+
+cases:
+  - name: invalid_model
+    model: nonexistent-model-xyz
+    messages:
+      - role: user
+        content: "Hello"
+
+  - name: empty_prompt
+    model: gpt-4o
+    messages:
+      - role: user
+        content: ""
+
+  - name: very_low_max_tokens
+    model: gpt-4o
+    max_tokens: 1
+    messages:
+      - role: user
+        content: "Write a long essay about the history of computing."

@@ -1,0 +1,36 @@
+# Model name mappings: canonical name -> provider-specific name
+# Use canonical names in scenarios; they get resolved per-provider.
+
+models:
+  openrouter:
+    gpt-4o: openai/gpt-4o
+    gpt-4o-mini: openai/gpt-4o-mini
+    claude-sonnet: anthropic/claude-sonnet-4-6
+    claude-opus: anthropic/claude-opus-4.5
+    claude-haiku: anthropic/claude-haiku-4-5-20251001
+    llama-3.1-70b: meta-llama/llama-3.1-70b-instruct
+    gemini-2.5-flash: google/gemini-2.5-flash
+    gemini-2.5-pro: google/gemini-2.5-pro
+
+  litellm:
+    gpt-4o: gpt-4o
+    gpt-4o-mini: gpt-4o-mini
+    claude-sonnet: claude-sonnet-4-6
+    claude-haiku: claude-haiku-4-5-20251001
+    llama-3.1-70b: together_ai/meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo
+
+  openai_direct:
+    gpt-4o: gpt-4o
+    gpt-4o-mini: gpt-4o-mini
+
+  portkey:
+    gpt-4o: gpt-4o
+    gpt-4o-mini: gpt-4o-mini
+
+  cloudflare_ai_gw:
+    gpt-4o: openai/gpt-4o
+    gpt-4o-mini: openai/gpt-4o-mini
+
+  gemini_direct:
+    gemini-2.5-flash: gemini-2.5-flash
+    gemini-2.5-pro: gemini-2.5-pro

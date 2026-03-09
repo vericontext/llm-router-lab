@@ -1,0 +1,23 @@
+name: basic_completion
+description: Basic single-turn prompt completions
+
+defaults:
+  model: gpt-4o
+  temperature: 0.7
+  max_tokens: 256
+
+cases:
+  - name: simple_question
+    messages:
+      - role: user
+        content: "What is the capital of France? Answer in one sentence."
+
+  - name: code_generation
+    messages:
+      - role: user
+        content: "Write a Python function that checks if a number is prime. Include a docstring."
+
+  - name: creative_writing
+    messages:
+      - role: user
+        content: "Write a haiku about programming."

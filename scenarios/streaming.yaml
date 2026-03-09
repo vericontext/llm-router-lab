@@ -1,0 +1,19 @@
+name: streaming
+description: Streaming responses with TTFT measurement
+
+defaults:
+  model: gpt-4o
+  temperature: 0.7
+  max_tokens: 512
+  stream: true
+
+cases:
+  - name: stream_short
+    messages:
+      - role: user
+        content: "Explain what an API is in two sentences."
+
+  - name: stream_long
+    messages:
+      - role: user
+        content: "Explain the differences between REST and GraphQL. Cover at least 5 points."

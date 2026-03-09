@@ -1,0 +1,46 @@
+name: tool_calling
+description: Tool/function calling tests
+
+defaults:
+  model: gpt-4o
+  temperature: 0.0
+  max_tokens: 512
+
+cases:
+  - name: weather_tool
+    messages:
+      - role: user
+        content: "What's the weather like in Seoul today?"
+    tools:
+      - type: function
+        function:
+          name: get_weather
+          description: Get the current weather for a given location.
+          parameters:
+            type: object
+            properties:
+              location:
+                type: string
+                description: City name
+              unit:
+                type: string
+                enum: [celsius, fahrenheit]
+                description: Temperature unit
+            required: [location]
+
+  - name: calculator_tool
+    messages:
+      - role: user
+        content: "What is 42 * 17 + 3?"
+    tools:
+      - type: function
+        function:
+          name: calculate
+          description: Evaluate a mathematical expression.
+          parameters:
+            type: object
+            properties:
+              expression:
+                type: string
+                description: The math expression to evaluate
+            required: [expression]

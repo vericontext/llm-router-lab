@@ -1,0 +1,56 @@
+name: opencode_streaming
+description: Streaming TTFT measurement for coding agent tasks — measures first-token latency critical for coding assistant UX
+
+defaults:
+  model: gpt-4o
+  temperature: 0.0
+  max_tokens: 1024
+  stream: true
+
+cases:
+  - name: code_completion_stream
+    messages:
+      - role: user
+        content: |
+          Complete the following Python function:
+
+          def merge_sorted_lists(list1: list[int], list2: list[int]) -> list[int]:
+              """Merge two sorted lists into a single sorted list."""
+
+  - name: bug_fix_stream
+    messages:
+      - role: user
+        content: |
+          Find and fix the bug in this binary search implementation:
+
+          def binary_search(arr: list[int], target: int) -> int:
+              left, right = 0, len(arr)
+              while left < right:
+                  mid = (left + right) // 2
+                  if arr[mid] == target:
+                      return mid
+                  elif arr[mid] < target:
+                      left = mid
+                  else:
+                      right = mid
+              return -1
+
+  - name: code_review_stream
+    messages:
+      - role: user
+        content: |
+          Review this FastAPI endpoint for security issues and suggest fixes:
+
+          from fastapi import FastAPI
+          import sqlite3
+
+          app = FastAPI()
+
+          @app.get("/users/{user_id}")
+          def get_user(user_id: str):
+              conn = sqlite3.connect("app.db")
+              cursor = conn.cursor()
+              cursor.execute(f"SELECT * FROM users WHERE id = '{user_id}'")
+              user = cursor.fetchone()
+              conn.close()
+              return {"user": user}

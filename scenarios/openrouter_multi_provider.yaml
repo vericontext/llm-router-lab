@@ -1,0 +1,59 @@
+name: openrouter_multi_provider
+description: OpenRouter multi-provider scenario — same prompts across OpenAI, Anthropic, and Meta models via a single router
+
+defaults:
+  temperature: 0.0
+  max_tokens: 512
+
+cases:
+  - name: reasoning_gpt4o
+    model: openai/gpt-4o
+    messages:
+      - role: user
+        content: "A farmer has 17 sheep. All but 9 die. How many sheep are left? Think step by step."
+
+  - name: reasoning_claude_sonnet
+    model: anthropic/claude-sonnet-4-6
+    messages:
+      - role: user
+        content: "A farmer has 17 sheep. All but 9 die. How many sheep are left? Think step by step."
+
+  - name: reasoning_llama
+    model: meta-llama/llama-3.1-70b-instruct
+    messages:
+      - role: user
+        content: "A farmer has 17 sheep. All but 9 die. How many sheep are left? Think step by step."
+
+  - name: reasoning_gemini_flash
+    model: google/gemini-2.5-flash
+    messages:
+      - role: user
+        content: "A farmer has 17 sheep. All but 9 die. How many sheep are left? Think step by step."
+
+  - name: code_gpt4o
+    model: openai/gpt-4o
+    max_tokens: 1024
+    messages:
+      - role: user
+        content: "Write a Python function that finds the longest palindromic substring in a given string. Include type hints and a docstring."
+
+  - name: code_claude_sonnet
+    model: anthropic/claude-sonnet-4-6
+    max_tokens: 1024
+    messages:
+      - role: user
+        content: "Write a Python function that finds the longest palindromic substring in a given string. Include type hints and a docstring."
+
+  - name: code_llama
+    model: meta-llama/llama-3.1-70b-instruct
+    max_tokens: 1024
+    messages:
+      - role: user
+        content: "Write a Python function that finds the longest palindromic substring in a given string. Include type hints and a docstring."
+
+  - name: code_gemini_flash
+    model: google/gemini-2.5-flash
+    max_tokens: 1024
+    messages:
+      - role: user
+        content: "Write a Python function that finds the longest palindromic substring in a given string. Include type hints and a docstring."

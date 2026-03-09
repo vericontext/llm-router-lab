@@ -1,0 +1,21 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": "openrouter",
+  "model": "anthropic/claude-sonnet-4-6",
+  "apiKey": "${OPENROUTER_API_KEY}",
+  "baseURL": "https://openrouter.ai/api/v1",
+  "models": {
+    "fast": {
+      "provider": "openrouter",
+      "model": "openai/gpt-4o-mini"
+    },
+    "default": {
+      "provider": "openrouter",
+      "model": "anthropic/claude-sonnet-4-6"
+    },
+    "large": {
+      "provider": "openrouter",
+      "model": "anthropic/claude-opus-4-6"
+    }
+  }
+}

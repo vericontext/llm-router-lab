@@ -1,0 +1,27 @@
+name: long_context
+description: Long context window tests
+
+defaults:
+  model: gpt-4o
+  temperature: 0.3
+  max_tokens: 256
+
+cases:
+  - name: needle_in_haystack
+    messages:
+      - role: system
+        content: "You are a helpful assistant that answers questions about the provided text."
+      - role: user
+        content: |
+          Here is a long document with various facts:
+
+          Section 1: The Earth orbits the Sun at an average distance of about 93 million miles.
+          Section 2: Water boils at 100 degrees Celsius at standard atmospheric pressure.
+          Section 3: The speed of light in a vacuum is approximately 299,792,458 meters per second.
+          Section 4: The secret code is ALPHA-BRAVO-7742.
+          Section 5: Python was first released in 1991 by Guido van Rossum.
+          Section 6: The Great Wall of China is approximately 13,171 miles long.
+          Section 7: A year on Jupiter is about 11.86 Earth years.
+          Section 8: The human body contains approximately 37.2 trillion cells.
+
+          Question: What is the secret code mentioned in the document?

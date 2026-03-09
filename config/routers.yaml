@@ -1,0 +1,49 @@
+routers:
+  openrouter:
+    provider_type: openrouter
+    base_url: https://openrouter.ai/api/v1
+    api_key_env: OPENROUTER_API_KEY
+    default_params:
+      temperature: 0.7
+
+  litellm:
+    provider_type: litellm
+    base_url: http://localhost:4000
+    api_key_env: LITELLM_API_KEY
+    default_params:
+      temperature: 0.7
+
+  openai_direct:
+    provider_type: openai_compat
+    base_url: https://api.openai.com/v1
+    api_key_env: OPENAI_API_KEY
+    default_params:
+      temperature: 0.7
+
+  portkey:
+    provider_type: portkey
+    base_url: https://api.portkey.ai/v1
+    api_key_env: PORTKEY_API_KEY
+    extra:
+      provider: openai
+      provider_api_key_env: OPENAI_API_KEY
+    default_params:
+      temperature: 0.7
+
+  cloudflare_ai_gw:
+    provider_type: cloudflare_ai_gw
+    base_url: https://gateway.ai.cloudflare.com
+    api_key_env: OPENAI_API_KEY
+    extra:
+      account_id: 0b631a2a1281da254171d62381ac67dd
+      gateway_id: vericontext
+      provider_path: compat
+    default_params:
+      temperature: 0.7
+
+  gemini_direct:
+    provider_type: openai_compat
+    base_url: https://generativelanguage.googleapis.com/v1beta/openai
+    api_key_env: GOOGLE_API_KEY
+    default_params:
+      temperature: 0.7

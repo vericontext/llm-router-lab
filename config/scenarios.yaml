@@ -1,0 +1,25 @@
+# Scenario index - lists available scenario files
+scenarios:
+  - name: basic_completion
+    file: scenarios/basic_completion.yaml
+    description: Basic single-turn prompt completions
+
+  - name: streaming
+    file: scenarios/streaming.yaml
+    description: Streaming responses with TTFT measurement
+
+  - name: tool_calling
+    file: scenarios/tool_calling.yaml
+    description: Tool/function calling tests
+
+  - name: error_handling
+    file: scenarios/error_handling.yaml
+    description: Error handling and edge cases
+
+  - name: long_context
+    file: scenarios/long_context.yaml
+    description: Long context window tests
+
+  - name: multi_turn
+    file: scenarios/multi_turn.yaml
+    description: Multi-turn conversation tests
