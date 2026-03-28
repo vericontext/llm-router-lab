@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #000;
+    color: #e7e9ea;
+    padding: 40px;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  .table-card {
+    background: #16181c;
+    border: 1px solid #2f3336;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 60px;
+    page-break-inside: avoid;
+  }
+  .table-card h3 {
+    margin: 0 0 16px 0;
+    font-size: 15px;
+    color: #71767b;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  th {
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 1px solid #2f3336;
+    color: #71767b;
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #2f3336;
+  }
+  tr:last-child td {
+    border-bottom: none;
+  }
+  .highlight {
+    color: #1d9bf0;
+    font-weight: 600;
+  }
+  .danger {
+    color: #f4212e;
+    font-weight: 600;
+  }
+  .success {
+    color: #00ba7c;
+    font-weight: 600;
+  }
+  .dim {
+    color: #71767b;
+  }
+  .note {
+    margin-top: 12px;
+    font-size: 12px;
+    color: #71767b;
+  }
+</style>
+</head>
+<body>
+
+<!-- TABLE 1: Router Overhead -->
+<div class="table-card">
+  <h3>Router Overhead — Minimal Prompts (max_tokens: 1)</h3>
+  <table>
+    <tr><th>Router</th><th>p50</th><th>p95</th><th>p99</th><th>p50/p99</th></tr>
+    <tr><td>Portkey</td><td>0.498s</td><td class="danger">4.650s</td><td class="danger">10.776s</td><td class="danger">21.6x</td></tr>
+    <tr><td>Cloudflare AI GW</td><td>0.517s</td><td>1.619s</td><td>3.833s</td><td>7.4x</td></tr>
+    <tr><td>OpenRouter</td><td class="success">0.539s</td><td class="success">0.911s</td><td class="success">1.206s</td><td class="success">2.2x</td></tr>
+    <tr><td>OpenAI Direct</td><td>0.698s</td><td>1.097s</td><td>1.531s</td><td>2.2x</td></tr>
+  </table>
+  <div class="note">20-30 repeats per router. Client: South Korea. Model: GPT-4o.</div>
+</div>
+
+<!-- TABLE 2: Coding Agent -->
+<div class="table-card">
+  <h3>Coding Agent Scenario — Real Coding Tasks (20 repeats)</h3>
+  <table>
+    <tr><th>Router</th><th>Avg</th><th>p50</th><th>p95</th><th>p99</th></tr>
+    <tr><td>OpenRouter</td><td class="success">4.35s</td><td class="success">4.56s</td><td class="success">9.66s</td><td class="success">11.52s</td></tr>
+    <tr><td>OpenAI Direct</td><td>5.74s</td><td>5.07s</td><td>17.62s</td><td>21.74s</td></tr>
+  </table>
+  <div class="note">OpenRouter: 24% faster avg, 2x more stable at p95.</div>
+</div>
+
+<!-- TABLE 3: Tail Latency -->
+<div class="table-card">
+  <h3>Tail Latency — p50/p99 Consistency Ratio</h3>
+  <table>
+    <tr><th>Router</th><th>p50</th><th>p99</th><th>Ratio</th><th></th></tr>
+    <tr><td>Portkey</td><td>0.498s</td><td class="danger">10.776s</td><td class="danger">21.6x</td><td class="dim">Russian roulette</td></tr>
+    <tr><td>Cloudflare</td><td>0.517s</td><td>3.833s</td><td>7.4x</td><td class="dim">Occasional surprises</td></tr>
+    <tr><td>OpenAI Direct</td><td>0.698s</td><td>1.531s</td><td>2.2x</td><td class="dim">Predictable</td></tr>
+    <tr><td>OpenRouter</td><td class="success">0.539s</td><td class="success">1.206s</td><td class="success">2.2x</td><td class="dim">Predictable + fast</td></tr>
+  </table>
+</div>
+
+<!-- TABLE 4: Multi-Provider -->
+<div class="table-card">
+  <h3>Multi-Provider via OpenRouter — Single API, 4 Models</h3>
+  <table>
+    <tr><th>Model</th><th>p50</th><th>Avg</th><th>p95</th></tr>
+    <tr><td>GPT-4o</td><td class="success">2.60s</td><td>2.94s</td><td>5.64s</td></tr>
+    <tr><td>Gemini 2.5 Flash</td><td>3.01s</td><td>3.53s</td><td>6.64s</td></tr>
+    <tr><td>Claude Sonnet 4</td><td>8.77s</td><td>8.36s</td><td>13.56s</td></tr>
+    <tr><td>Llama 3.1 70B</td><td>9.88s</td><td>10.06s</td><td>17.19s</td></tr>
+  </table>
+</div>
+
+<!-- TABLE 5: Gemini Direct vs Router -->
+<div class="table-card">
+  <h3>Gemini Direct vs. Gemini via OpenRouter</h3>
+  <table>
+    <tr><th>Path</th><th>p50</th><th>p95</th><th>p99</th></tr>
+    <tr><td>Gemini Direct</td><td>1.307s</td><td>1.981s</td><td>2.510s</td></tr>
+    <tr><td>Via OpenRouter</td><td>1.583s</td><td>2.013s</td><td class="success">2.042s</td></tr>
+  </table>
+  <div class="note">~270ms overhead at p50. At p99, OpenRouter is tighter (2.04s vs 2.51s).</div>
+</div>
+
+<!-- TABLE 6: Model Tier Cost -->
+<div class="table-card">
+  <h3>Model Tier Cost-Latency Tradeoff</h3>
+  <table>
+    <tr><th>Model (Tier)</th><th>Avg</th><th>p50</th><th>Tokens</th><th>Cost/1K calls</th></tr>
+    <tr><td>gpt-4o-mini <span class="dim">(fast)</span></td><td>7.58s</td><td>7.04s</td><td>403</td><td class="success">~$0.10</td></tr>
+    <tr><td>claude-sonnet <span class="dim">(default)</span></td><td>9.14s</td><td>9.20s</td><td>583</td><td>~$12.25</td></tr>
+    <tr><td>claude-opus <span class="dim">(large)</span></td><td>10.66s</td><td>9.70s</td><td>596</td><td class="danger">~$48.35</td></tr>
+  </table>
+  <div class="note">mini is ~150x cheaper than sonnet. Latency gap is only +31%.</div>
+</div>
+
+<!-- TABLE 7: Streaming TTFT -->
+<div class="table-card">
+  <h3>Streaming TTFT — Time to First Token (60 calls)</h3>
+  <table>
+    <tr><th>Router</th><th>TTFT</th><th>p50 Total</th><th>p95 Total</th></tr>
+    <tr><td>OpenAI Direct</td><td class="success">0.569s</td><td>5.49s</td><td>10.58s</td></tr>
+    <tr><td>OpenRouter</td><td>0.820s</td><td>7.24s</td><td>25.67s</td></tr>
+  </table>
+  <div class="note">Direct wins streaming TTFT by 251ms. Reverses the non-streaming result.</div>
+</div>
+
+<!-- TABLE 8: Tool Calling -->
+<div class="table-card">
+  <h3>Tool Calling Overhead (40 calls)</h3>
+  <table>
+    <tr><th>Router</th><th>p50</th><th>p95</th><th>p99</th></tr>
+    <tr><td>OpenAI Direct</td><td class="success">0.699s</td><td>1.187s</td><td class="danger">3.050s</td></tr>
+    <tr><td>OpenRouter</td><td>0.780s</td><td>1.261s</td><td class="success">1.523s</td></tr>
+  </table>
+  <div class="note">+81ms per turn, but p99 is 2x better. Consistency beats raw speed.</div>
+</div>
+
+<!-- TABLE 9: opencode Agent Sessions -->
+<div class="table-card">
+  <h3>Real-World Coding Agent — opencode Benchmark (3 repeats each)</h3>
+  <table>
+    <tr><th>Provider</th><th>Task</th><th>Wall-clock</th><th>Input Tokens</th><th>Output</th></tr>
+    <tr><td>OpenAI Direct</td><td class="dim">type_hints (easy)</td><td>13.5s</td><td>11,077</td><td>193</td></tr>
+    <tr><td>OpenRouter</td><td class="dim">type_hints (easy)</td><td class="success">8.3s</td><td class="highlight">1,123</td><td>164</td></tr>
+    <tr><td colspan="5" style="border-bottom: 1px solid #2f3336"></td></tr>
+    <tr><td>OpenAI Direct</td><td class="dim">find_bug (med)</td><td>6.5s</td><td>7,899</td><td>119</td></tr>
+    <tr><td>OpenRouter</td><td class="dim">find_bug (med)</td><td class="success">4.9s</td><td class="highlight">1,087</td><td>137</td></tr>
+    <tr><td colspan="5" style="border-bottom: 1px solid #2f3336"></td></tr>
+    <tr><td>OpenAI Direct</td><td class="dim">refactor (hard)</td><td>18.7s</td><td>19,309</td><td>642</td></tr>
+    <tr><td>OpenRouter</td><td class="dim">refactor (hard)</td><td class="success">15.4s</td><td class="highlight">3,194</td><td>838</td></tr>
+  </table>
+  <div class="note">OpenRouter: 17-38% faster. Input tokens: 3-10x fewer via Chat Completions vs Responses API.</div>
+</div>
+
+</body>
+</html>
